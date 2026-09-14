@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react'
 import { getCollection } from '../api.js'
 
-function ResourcePage({ resource, title, description }) {
+function ResourcePage({ endpoint, resource, title, description }) {
   const [items, setItems] = useState([])
   const [error, setError] = useState('')
 
   useEffect(() => {
     let active = true
-    getCollection(resource)
+    getCollection(endpoint, resource)
       .then((data) => active && setItems(data))
       .catch((requestError) => active && setError(requestError.message))
     return () => { active = false }
-  }, [resource])
+  }, [endpoint, resource])
 
   return (
     <section className="resource-page">
